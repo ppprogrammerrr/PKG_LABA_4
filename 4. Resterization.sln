@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35806.99 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "4. Resterization", "4. Resterization\4. Resterization.csproj", "{B8A4816D-0896-4555-B79C-4F9AD59ADF4B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8A4816D-0896-4555-B79C-4F9AD59ADF4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8A4816D-0896-4555-B79C-4F9AD59ADF4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8A4816D-0896-4555-B79C-4F9AD59ADF4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8A4816D-0896-4555-B79C-4F9AD59ADF4B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {A44B8E4A-C7C3-4180-966B-948C4851E017}
+	EndGlobalSection
+EndGlobal
