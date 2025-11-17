@@ -127,12 +127,45 @@ public partial class MainWindow : Window
                     rect.StrokeThickness = 0.5;
                 else
                     rect.StrokeThickness = 0.1;
-                    Canvas.SetLeft(rect, col * cellSize);
+                Canvas.SetLeft(rect, col * cellSize);
                 // flip y
                 Canvas.SetTop(rect, (gridSize - 1 - row) * cellSize);
 
                 canvas.Children.Add(rect);
-                grid[col, row] = rect; 
+                grid[col, row] = rect;
+
+                //coordinates
+                if (row == 0)
+                {
+                    TextBlock xCoord = new TextBlock
+                    {
+                        Text = col.ToString(),
+                        FontSize = 8,
+                        Foreground = Brushes.Gray,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Background = Brushes.Transparent
+                    };
+
+                    Canvas.SetLeft(xCoord, col * cellSize + cellSize / 2 - 5);
+                    Canvas.SetTop(xCoord, (gridSize - 1) * cellSize + 2);
+                    canvas.Children.Add(xCoord);
+                }
+                if (col == 0 && row != 0)
+                {
+                    TextBlock yCoord = new TextBlock
+                    {
+                        Text = row.ToString(),
+                        FontSize = 8,
+                        Foreground = Brushes.Gray,
+                        HorizontalAlignment = HorizontalAlignment.Center,
+                        VerticalAlignment = VerticalAlignment.Center,
+                        Background = Brushes.Transparent
+                    };
+                    Canvas.SetLeft(yCoord, col * cellSize + cellSize / 2 - 5);
+                    Canvas.SetTop(yCoord, (gridSize - 1 - row) * cellSize + cellSize / 2 - 5);
+                    canvas.Children.Add(yCoord);
+                }
             }
         }
 
