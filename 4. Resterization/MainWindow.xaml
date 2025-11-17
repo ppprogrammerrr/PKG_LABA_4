@@ -20,33 +20,17 @@
         </Grid.RowDefinitions>
 
 
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="1. Linear Algorithm" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-        <TextBlock Grid.Row="0" Grid.Column="1" Text="2. CDA Algorithm" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-        <TextBlock Grid.Row="0" Grid.Column="2" Text="3. Bresenham Algorithm" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
-        <TextBlock Grid.Row="0" Grid.Column="3" Text="4. Bresenham (Circle)" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        <TextBlock Name="algorithm" Grid.ColumnSpan="2" Grid.Row="0" Grid.Column="0" Text="1. Linear Algorithm" HorizontalAlignment="Center" VerticalAlignment="Center" FontWeight="Bold"/>
+        <Menu Grid.Column="2" Grid.Row="0" Grid.ColumnSpan="2">
+            <MenuItem Name="Linear" Header="Linear" Click="SelectAlgorithm"/>
+            <MenuItem Name="DDA" Header="DDA" Click="SelectAlgorithm"/>
+            <MenuItem Name="Bresenham" Header="Bresenham" Click="SelectAlgorithm"/>
+            <MenuItem Name="Circle" Header="Circle" Click="SelectAlgorithm"/>
+        </Menu>
 
-
-        <Border Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" Background="White">
+        <Border Grid.ColumnSpan="4" Grid.Row="1" Grid.Column="0" BorderBrush="Gray" BorderThickness="1" Margin="5" Background="White">
             <Viewbox Stretch="Uniform">
-                <Canvas x:Name="LinearCanvas" Width="200" Height="200" Background="Transparent"/>
-            </Viewbox>
-        </Border>
-
-        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Gray" BorderThickness="1" Margin="5" Background="White">
-            <Viewbox Stretch="Uniform">
-                <Canvas x:Name="CDACanvas" Width="200" Height="200" Background="Transparent"/>
-            </Viewbox>
-        </Border>
-
-        <Border Grid.Row="1" Grid.Column="2" BorderBrush="Gray" BorderThickness="1" Margin="5" Background="White">
-            <Viewbox Stretch="Uniform">
-                <Canvas x:Name="BresenhamCanvas" Width="200" Height="200" Background="Transparent"/>
-            </Viewbox>
-        </Border>
-
-        <Border Grid.Row="1" Grid.Column="3" BorderBrush="Gray" BorderThickness="1" Margin="5" Background="White">
-            <Viewbox Stretch="Uniform">
-                <Canvas x:Name="BresenhamCircleCanvas" Width="200" Height="200" Background="Transparent"/>
+                <Canvas x:Name="Canvas" Width="200" Height="200" Background="Transparent"/>
             </Viewbox>
         </Border>
 

@@ -18,11 +18,21 @@ public partial class MainWindow : Window
 {
     private int currentGridSize = 10;
     private Dictionary<Canvas, Rectangle[,]> gridsArray = new Dictionary<Canvas, Rectangle[,]>();
+    private string selectedAlgorithm = "Linear";
 
     public MainWindow()
     {
         InitializeComponent();
         GenerateAllGrids(10);
+    }
+
+    private void SelectAlgorithm(object sender, RoutedEventArgs args)
+    {
+        if (sender is MenuItem m)
+        {
+                selectedAlgorithm = m.Name.ToString();
+                algorithm.Text = selectedAlgorithm;
+        }
     }
 
     private void GenerateGridButton_Click(object sender, RoutedEventArgs e)
@@ -70,19 +80,26 @@ public partial class MainWindow : Window
         }
 
         GenerateAllGrids(currentGridSize);
-        ExecuteLinearAlgorithm(x0, y0, x1, y1);
-        ExecuteCDA(x0, y0, x1, y1);
-        ExecuteBresenham(x0, y0, x1, y1);
-        ExecuteBresenhamCircle(radius);
+        switch (selectedAlgorithm) {
+            case ("Linear"):
+                ExecuteLinearAlgorithm(x0, y0, x1, y1);
+                break;
+            case ("DDA"):
+                ExecuteDDA(x0, y0, x1, y1);
+                break;
+            case ("Bresenham"):
+                 ExecuteBresenham(x0, y0, x1, y1);
+                break;
+            case ("Circle"):
+                ExecuteBresenhamCircle(radius);
+                break;
+    }
     }
 
     public void GenerateAllGrids(int gridSize)
     {
         currentGridSize = gridSize;
-        GenerateGrid(LinearCanvas, gridSize);
-        GenerateGrid(CDACanvas, gridSize);
-        GenerateGrid(BresenhamCanvas, gridSize);
-        GenerateGrid(BresenhamCircleCanvas, gridSize);
+        GenerateGrid(Canvas, gridSize);
     }
 
     public void GenerateGrid(Canvas canvas, int gridSize)
@@ -102,11 +119,15 @@ public partial class MainWindow : Window
                     Width = cellSize,
                     Height = cellSize,
                     Stroke = Brushes.LightGray,
-                    StrokeThickness = 0.5,
+                    StrokeThickness = 0,
                     Fill = Brushes.White,
                     Tag = (col, row)  //(x,y), or rather (x,-y)
                 };
-                Canvas.SetLeft(rect, col * cellSize);
+                if (cellSize > 4)
+                    rect.StrokeThickness = 0.5;
+                else
+                    rect.StrokeThickness = 0.1;
+                    Canvas.SetLeft(rect, col * cellSize);
                 // flip y
                 Canvas.SetTop(rect, (gridSize - 1 - row) * cellSize);
 
@@ -145,38 +166,42 @@ public partial class MainWindow : Window
 
             if (pixelX >= 0 && pixelX < currentGridSize && pixelY >= 0 && pixelY < currentGridSize) //if in grid
             {
-                ColorPixel(LinearCanvas, pixelX, pixelY);
+                ColorPixel(Canvas, pixelX, pixelY);
             }
 
             x += dx;
         }
     }
 
-    private void ExecuteCDA(int x0, int y0, int x1, int y1)
+    private void Swap(ref int a, ref int b)
     {
-        int dx = x1 - x0;
-        int dy = y1 - y0;
+        int temp = a;
+        a = b;
+        b = temp;
+    }
 
-        int steps = Math.Max(Math.Abs(dx), Math.Abs(dy));
+    private void ExecuteDDA(int x0, int y0, int x1, int y1)
+    {
+        float dx = x1 - x0;
+        float dy = y1 - y0;
 
-        if (steps == 0)
-        {
-            ColorPixel(CDACanvas, x0, y0);
-            return;
-        }
 
-        double x = x0;
-        double y = y0;
-        double xInc = dx / (double)steps;
-        double yInc = dy / (double)steps;
+        float steps = Math.Max(Math.Abs(dx), Math.Abs(dy)) * 10;    //more intermediate points for truer dda
+
+        float xInc = dx / steps;
+        float yInc = dy / steps;
+
+        float x = x0;
+        float y = y0;
 
         for (int i = 0; i <= steps; i++)
         {
-            ColorPixel(CDACanvas, (int)Math.Round(x), (int)Math.Round(y));
+            ColorPixel(Canvas, (int)Math.Round(x), (int)Math.Round(y));
             x += xInc;
             y += yInc;
         }
     }
+
 
     private void ExecuteBresenham(int x0, int y0, int x1, int y1)
     {
@@ -191,7 +216,7 @@ public partial class MainWindow : Window
 
         while (true)
         {
-            ColorPixel(BresenhamCanvas, x, y);
+            ColorPixel(Canvas, x, y);
 
             if (x == x1 && y == y1) break;
 
@@ -220,15 +245,15 @@ public partial class MainWindow : Window
 
         while (y >= x)
         {
-            ColorPixel(BresenhamCircleCanvas, centerX + x, centerY + y);
-            ColorPixel(BresenhamCircleCanvas, centerX - x, centerY + y);
-            ColorPixel(BresenhamCircleCanvas, centerX + x, centerY - y);
-            ColorPixel(BresenhamCircleCanvas, centerX - x, centerY - y);
-            ColorPixel(BresenhamCircleCanvas, centerX + y, centerY + x);
-            ColorPixel(BresenhamCircleCanvas, centerX - y, centerY + x);
-            ColorPixel(BresenhamCircleCanvas, centerX + y, centerY - x);
-            ColorPixel(BresenhamCircleCanvas, centerX - y, centerY - x);
-
+            ColorPixel(Canvas, centerX + x, centerY + y);
+            ColorPixel(Canvas, centerX - x, centerY + y);
+            ColorPixel(Canvas, centerX + x, centerY - y);
+            ColorPixel(Canvas, centerX - x, centerY - y);
+            ColorPixel(Canvas, centerX + y, centerY + x);
+            ColorPixel(Canvas, centerX - y, centerY + x);
+            ColorPixel(Canvas, centerX + y, centerY - x);
+            ColorPixel(Canvas, centerX - y, centerY - x);
+                
             x++;
             if (d > 0)
             {
